@@ -212,7 +212,15 @@ var bingo = function(bingoList, size) {
 	var qMode = (MODE == "short" || MODE == "veryshort") ? "&mode=" + MODE : "";
 	var qEx = EXPLORATION ? '&exploration=1':'';
 	var results = $("#results");
-	results.append ('<a href="'+qSeed+qMode+qEx+'"><img src="./img/jpn.png" alt="Japanese"></a>&emsp;<a href="'+qSeed+qMode+qEx+'&lang=en"><img src="./img/usa.png" alt="English"></a><p>SRB EX: <strong>v1</strong>&emsp;Seed: <strong>' +
+	actualqMode = mode
+	if (qMode == "veryshort") {
+		actualqMode = "short"
+	} else if (qMode == "short") {
+		actualqMode = "normal"
+	} else {
+		actualqMode = "long"
+	}
+	results.append('<a href="' + qSeed + actualqMode + qEx + '"><img src="./img/jpn.png" alt="Japanese"></a>&emsp;<a href="' + qSeed + actualqMode +qEx+'&lang=en"><img src="./img/usa.png" alt="English"></a><p>SRB EX: <strong>v1</strong>&emsp;Seed: <strong>' +
 		SEED + "</strong>&emsp;Card type: <strong>" + cardtype + "</strong></p>")
 
 	if (!EXPLORATION) {

@@ -212,7 +212,7 @@ var bingo = function(bingoList, size) {
 	var qMode = (MODE == "short" || MODE == "veryshort") ? "&mode=" + MODE : "";
 	var qEx = EXPLORATION ? '&exploration=1':'';
 	var results = $("#results");
-	actualqMode = mode
+	actualqMode = qMode
 	if (qMode == "veryshort") {
 		actualqMode = "short"
 	} else if (qMode == "short") {

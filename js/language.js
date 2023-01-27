@@ -199,6 +199,7 @@ var bingo = function(bingoList, size) {
 
 	var cardtype = "string";
 
+	if (MODE == "long") { cardtype = "Long"; }
 	if (MODE == "short") { cardtype = "Short"; }
 	else if (MODE == "veryshort") { cardtype = "VeryShort"; }
 	else { cardtype = "Normal";	}
@@ -209,16 +210,18 @@ var bingo = function(bingoList, size) {
 	var MAX_SEED = 999999; //1 million cards
 
 	var qSeed = "?seed=" + SEED;
-	var qMode = (MODE == "short" || MODE == "veryshort") ? "&mode=" + MODE : "";
+	var qMode = (MODE == "short" || MODE == "veryshort" || MODE == "long") ? "&mode=" + MODE : "";
 	var qEx = EXPLORATION ? '&exploration=1':'';
 	var results = $("#results");
 	actualqMode = qMode
-	if (qMode == "veryshort") {
+	if (qMode == "&mode=veryshort") {
 		actualqMode = "short"
-	} else if (qMode == "short") {
-		actualqMode = "normal"
-	} else {
-		actualqMode = "long"
+	} else if (qMode == "&mode=short") {
+		actualqMode = "&mode=short"
+	} else if (qMode == "&mode=long"){
+		actualqMode = "&mode=long"
+	}else{
+		actualqMode = ""
 	}
 	results.append('<a href="' + qSeed + actualqMode + qEx + '"><img src="./img/jpn.png" alt="Japanese"></a>&emsp;<a href="' + qSeed + actualqMode +qEx+'&lang=en"><img src="./img/usa.png" alt="English"></a><p>SRB EX: <strong>v1</strong>&emsp;Seed: <strong>' +
 		SEED + "</strong>&emsp;Card type: <strong>" + cardtype + "</strong></p>")

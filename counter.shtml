@@ -130,7 +130,7 @@
                     totalCounterCount = totalCounterCount + 1;
                 } else if (items[a].match("ウワサのミツバ")) {
                     maxMitsuba = parseInt(items[a].replace(regex, ""));
-                    $('table').append('<td id = "buttonMitsuba"><img src="img/mitsuba.png"><br>' + '<p id="counterMitsuba">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
+                    $('table').append('<td id = "buttonMitsuba"><img src="https://raw.githubusercontent.com/idlast/BotWBingo2023/main/img/mitsuba.PNG"><br>' + '<p id="counterMitsuba">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
                     counterMitsuba = document.getElementById("counterMitsuba");
                     if (!counterMitsuba) { continue; }
                     buttonMitsuba = document.getElementById("buttonMitsuba");

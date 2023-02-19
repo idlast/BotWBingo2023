@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bingo Popout - SpeedRunsLive</title>
+    <style type="text/css">
+        html,
+        body {
+            background: #000;
+            color: #fff;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-weight: bold;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 19px;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -o-user-select: none;
+            user-select: none
+        }
+
+        table {
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse
+        }
+
+        td {
+            padding: 0 10px;
+            height: 19%;
+            border-top: 2px #666 solid;
+            box-shadow: inset 0px 0px 50px rgba(0, 0, 0, .6);
+            -moz-box-shadow: inset 0px 0px 50px rgba(0, 0, 0, .6);
+            -webkit-box-shadow: inset 0px 0px 50px rgba(0, 0, 0, .6)
+        }
+
+        p {
+            display: inline-block;
+        }
+
+
+        td:hover {
+            background: #012;
+            cursor: pointer
+        }
+
+        .greensquare {
+            background: #051
+        }
+
+        .greensquare:hover {
+            background: #072
+        }
+
+        .redsquare {
+            background: #501
+        }
+
+        .redsquare:hover {
+            background: #702
+        }
+
+        th {
+            height: 20px;
+            background: #1448b3;
+            box-shadow: inset 0px 0px 50px rgba(0, 0, 0, .6);
+            -moz-box-shadow: inset 0px 0px 50px rgba(0, 0, 0, .6);
+            -webkit-box-shadow: inset 0px 0px 50px rgba(0, 0, 0, .6)
+        }
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <table>
+    </table>
+    <script type="text/javascript">$(function () {
+            var data = decodeURIComponent(document.location.hash).substring(1).split('=');
+            var line = data[0];
+            var items = data[1].split(';;;');
+            let counter, btnAdd;
+            let n;
+            let totalCounterCount = 0;
+            const regex = /[^0-9]/g;
+            $('table tr').html(line);
+            console.log("items:" + items)
+            for (a in items) {
+                if (items[a].match("ヒノックス")&& items[a].match("討伐")) {
+                    maxHinox = parseInt(items[a].replace(regex, ""));
+                    $('table').append('<td id = "buttonHinox"><img src="img/hinox.png"><br>' + '<p id="counterHinox">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
+                    counterHinox = document.getElementById("counterHinox");
+                    if (!counterHinox) { continue; }
+                    buttonHinox = document.getElementById("buttonHinox");
+                    if (!buttonHinox) { continue; }
+                    numHinox = 0;
+                    buttonHinox.addEventListener("click", addCountHinox);
+                    totalCounterCount = totalCounterCount + 1;
+                } else if (items[a].match("ハイラル図鑑 武器")) {
+                    maxCompWeapon = parseInt(items[a].replace(regex, ""));
+                    $('table').append('<td id = "buttonCompWeapon"><img src="img/weapon.png"><br>' + '<p id="counterCompWeapon">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
+                    counterCompWeapon = document.getElementById("counterCompWeapon");
+                    if (!counterCompWeapon) { continue; }
+                    buttonCompWeapon = document.getElementById("buttonCompWeapon");
+                    if (!buttonCompWeapon) { continue; }
+                    numCompWeapon = 0;
+                    buttonCompWeapon.addEventListener("click", addCountCompWeapon);
+                    totalCounterCount = totalCounterCount + 1;
+                } else if (items[a].match("ハイラル図鑑 魔物")) {
+                    maxCompMonster = parseInt(items[a].replace(regex, ""));
+                    $('table').append('<td id = "buttonCompMonster"><img src="img/boko.png"><br>' + '<p id="counterCompMonster">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
+                    counterCompMonster = document.getElementById("counterCompMonster");
+                    if (!counterCompMonster) { continue; }
+                    buttonCompMonster = document.getElementById("buttonCompMonster");
+                    if (!buttonCompMonster) { continue; }
+                    numCompMonster = 0;
+                    buttonCompMonster.addEventListener("click", addCountCompMonster);
+                    totalCounterCount = totalCounterCount + 1;
+                } else if (items[a].match("ハイラル図鑑 生き物")) {
+                    maxCompCreature = parseInt(items[a].replace(regex, ""));
+                    $('table').append('<td id = "buttonCompCreature"><img src="img/creature.png"><br>' + '<p id="counterCompCreature">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
+                    counterCompCreature = document.getElementById("counterCompCreature");
+                    if (!counterCompCreature) { continue; }
+                    counterCompCreature = document.getElementById("counterCompCreature");
+                    if (!buttonCompCreature) { continue; }
+                    numCompCreature = 0;
+                    buttonCompCreature.addEventListener("click", addCountCompCreature);
+                    totalCounterCount = totalCounterCount + 1;
+                } else if (items[a].match("ウワサのミツバ")) {
+                    maxMitsuba = parseInt(items[a].replace(regex, ""));
+                    $('table').append('<td id = "buttonMitsuba"><img src="img/mitsuba.png"><br>' + '<p id="counterMitsuba">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
+                    counterMitsuba = document.getElementById("counterMitsuba");
+                    if (!counterMitsuba) { continue; }
+                    buttonMitsuba = document.getElementById("buttonMitsuba");
+                    if (!buttonMitsuba) { continue; }
+                    numMitsuba = 0;
+                    buttonMitsuba.addEventListener("click", addCountMitsuba);
+                    totalCounterCount = totalCounterCount + 1;
+                } else if (items[a].match("ミニゲーム")) {
+                    maxMinigame = parseInt(items[a].replace(regex, ""));
+                    $('table').append('<td id = "buttonMinigame"><img src="img/minigame.png"><br>' + '<p id="counterMinigame">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
+                    counterMinigame = document.getElementById("counterMinigame");
+                    if (!counterMinigame) { continue; }
+                    buttonMinigame = document.getElementById("buttonMinigame");
+                    if (!buttonMinigame) { continue; }
+                    numMinigame = 0;
+                    buttonMinigame.addEventListener("click", addCountMinigame);
+                    totalCounterCount = totalCounterCount + 1;
+                } else if (items[a].match("ライネル全討伐")) {
+                    maxLynel = parseInt(items[a].replace(regex, ""));
+                    $('table').append('<td id = "buttonLynel"><img src="img/lynel.png"><br>' + '<p id="counterLynel">0</p>' + '/<p>' + 23 + '</p>' + '</td>');
+                    counterLynel = document.getElementById("counterLynel");
+                    if (!counterLynel) { continue; }
+                    buttonLynel = document.getElementById("buttonLynel");
+                    if (!buttonLynel) { continue; }
+                    numLynel = 0;
+                    buttonLynel.addEventListener("click", addCountLynel);
+                    totalCounterCount = totalCounterCount + 1;
+                } else if (items[a].match("カッシーワ")) {
+                    maxKass = parseInt(items[a].replace(regex, ""));
+                    $('table').append('<td id = "buttonKass"><img src="img/kass.png"><br>' + '<p id="counterKass">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
+                    counterKass = document.getElementById("counterKass");
+                    if (!counterKass) { continue; }
+                    buttonKass = document.getElementById("buttonKass");
+                    if (!buttonKass) { continue; }
+                    numKass = 0;
+                    buttonKass.addEventListener("click", addCountKass);
+                    totalCounterCount = totalCounterCount + 1;
+                }
+            }
+            function addCountHinox() {
+                if(numHinox + 1 == maxHinox){
+                    numHinox++;
+                    counterHinox.innerHTML = numHinox;
+                    var bg = document.getElementById("buttonHinox");
+                    bg.style.backgroundColor = 'rgb(0,85,17)';
+                }else if (numHinox < maxHinox) {
+                    numHinox++;
+                    counterHinox.innerHTML = numHinox;
+                }
+            }
+            function addCountCompWeapon() {
+                if (numCompWeapon + 1 == maxCompWeapon) {
+                    numCompWeapon++;
+                    counterCompWeapon.innerHTML = numCompWeapon;
+                    var bg = document.getElementById("buttonCompWeapon");
+                    bg.style.backgroundColor = 'rgb(0,85,17)'
+                } else if (numCompWeapon < maxCompWeapon) {
+                    numCompWeapon++;
+                    counterCompWeapon.innerHTML = numCompWeapon;
+                }
+            }
+            function addCountCompMonster() {
+                if (numCompMonster + 1 == maxCompMonster) {
+                    numCompMonster++;
+                    counterCompMonster.innerHTML = numCompMonster;
+                    var bg = document.getElementById("buttonCompMonster");
+                    bg.style.backgroundColor = 'rgb(0,85,17)'
+                } else if (numCompMonster < maxCompMonster) {
+                    numCompMonster++;
+                    counterCompMonster.innerHTML = numCompMonster;
+                }
+            }
+            function addCountCompCreature() {
+                if (numCompCreature + 1 == maxCompCreature) {
+                    numCompCreature++;
+                    counterCompCreature.innerHTML = numCompCreature;
+                    var bg = document.getElementById("buttonCompCreature");
+                    bg.style.backgroundColor = 'rgb(0,85,17)'
+                } else if(numCompCreature < maxCompCreature){
+                    numCompCreature++;
+                    counterCompCreature.innerHTML = numCompCreature;
+                }
+            }
+            function addCountMitsuba() {
+                if (numMitsuba + 1 == maxMitsuba) {
+                    numMitsuba++;
+                    counterMitsuba.innerHTML = numMitsuba;
+                    var bg = document.getElementById("buttonMitsuba");
+                    bg.style.backgroundColor = 'rgb(0,85,17)'
+                } else if (numMitsuba < maxMitsuba) {
+                    numMitsuba++;
+                    counterMitsuba.innerHTML = numMitsuba;
+                }
+            }
+            function addCountMinigame() {
+                if (numMinigame + 1 == maxMinigame) {
+                    numMinigame++;
+                    counterMinigame.innerHTML = numMinigame;
+                    var bg = document.getElementById("buttonMinigame");
+                    bg.style.backgroundColor = 'rgb(0,85,17)'
+                } else if (numMinigame < maxMinigame) {
+                    numMinigame++;
+                    counterMinigame.innerHTML = numMinigame;
+                }
+            }
+            function addCountLynel() {
+                if (numLynel + 1 == maxLynel) {
+                    numLynel++;
+                    counterLynel.innerHTML = numLynel;
+                    var bg = document.getElementById("buttonLynel");
+                    bg.style.backgroundColor = 'rgb(0,85,17)'
+                } else if (numLynel < maxLynel) {
+                    numLynel++;
+                    counterLynel.innerHTML = numLynel;
+                }
+            }
+            function addCountKass() {
+                if (numKass + 1 == maxKass) {
+                    numKass++;
+                    counterKass.innerHTML = numKass;
+                    var bg = document.getElementById("buttonKass");
+                    bg.style.backgroundColor = 'rgb(0,85,17)'
+                } else if (numKass < maxKass) {
+                    numKass++;
+                    counterKass.innerHTML = numKass;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

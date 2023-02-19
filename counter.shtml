@@ -140,7 +140,7 @@
                     totalCounterCount = totalCounterCount + 1;
                 } else if (items[a].match("ミニゲーム")) {
                     maxMinigame = parseInt(items[a].replace(regex, ""));
-                    $('table').append('<td id = "buttonMinigame"><img src="img/minigame.png"><br>' + '<p id="counterMinigame">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
+                    $('table').append('<td id = "buttonMinigame"><img src="img/miniG.png"><br>' + '<p id="counterMinigame">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
                     counterMinigame = document.getElementById("counterMinigame");
                     if (!counterMinigame) { continue; }
                     buttonMinigame = document.getElementById("buttonMinigame");

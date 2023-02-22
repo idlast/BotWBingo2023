@@ -36,9 +36,6 @@ for line in strline:
     text = text + "] },\n"
     resultList[rank-1].append(text)
     
-
-#
-print(text)
 header = "var bingoList = [\n[\n"
 aider = "], [\n"
 footer = "]\n]; "
@@ -50,7 +47,5 @@ for result in resultList:
     finalizedText = finalizedText + aider
 
 finalizedText = finalizedText[:-5]
-
 finalizedText = finalizedText + footer
-
-print(finalizedText)
+print("C:"+finalizedText)

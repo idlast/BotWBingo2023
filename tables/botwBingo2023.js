@@ -107,7 +107,7 @@ var bingoList = [
         { "name": "ミニチャレンジ:ホタル ノ ヒカリ", "en": "By Firefly's Light' Side Quest", "types": ["Great Fairy", "Camera", "Hateno", "Dueling Peaks", "Side Quest"] },
     ], [
         { "name": "イワロック、マグロック、ガチロック1体ずつ討伐", "en": "Kill Stone&Igneo&Frost Talus", "types": ["Kill", "Boss Monster", "Eldin", "Hebra", "Talus"] },
-        { "name": "ガーディアンを倒して力���試練の祠3基攻略", "en": "3 A Test of Strength while Killing Guardian Scout", "types": ["Guardian", "Shrine", "Shrines"] },
+        { "name": "ガーディアンを倒して力の試練の祠3基攻略", "en": "3 A Test of Strength while Killing Guardian Scout", "types": ["Guardian", "Shrine", "Shrines"] },
         { "name": "カッシーワのチャレンジ5種", "en": "5 Kass Quests", "types": ["Kass", "Shrine Quests", "Shrine", "Shrines", "Side Quest"] },
         { "name": "ハイラル図鑑 武器 20種登録（購入不可）", "en": "20 Equipment in Compendium(without purchase)", "types": ["Camera", "Compendium", "Compedium-Weapon", "Weapon"] },
         { "name": "ミニゲーム:飛行訓練 的を20個射抜く", "en": "20 Targets in Flight Range Minigame", "types": ["Divine Beast", "Tabantha", "Hebra", "Champion's Abilities"] },

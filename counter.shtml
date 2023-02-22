@@ -84,11 +84,106 @@
             let counter, btnAdd;
             let n;
             let totalCounterCount = 0;
+            let aNum = 0;
+            let bNum = 0;
             const regex = /[^0-9]/g;
             $('table tr').html(line);
             console.log("items:" + items)
             for (a in items) {
-                if ((items[a].match("ヒノックス")&& items[a].match("討伐")) || (items[a].match("Hinox") && items[a].match("Kill"))) {
+                let maxCounter = 0;
+                aNum = 0;
+                bNum = 0;
+                if ((items[a].match("ヒノックス") && items[a].match("討伐")) || (items[a].match("Hinox") && items[a].match("Kill"))) {
+                    for (b = 0; b < 5; b++) {
+                        if ((items[b].match("ヒノックス") && items[b].match("討伐")) || (items[b].match("Hinox") && items[b].match("Kill"))) {
+                            aNum = parseInt(items[a].replace(regex, ""))
+                            bNum = parseInt(items[b].replace(regex, ""))
+                            if (aNum < bNum) {
+                                items[a] = "deleted"
+                            }
+                        }
+                    }
+                }
+                if ((items[a].match("ミニゲーム") && items[a].match("種")) || items[a].match("Minigames")) {
+                    for (b = 0; b < 5; b++) {
+                        if ((items[b].match("ミニゲーム") && items[b].match("種")) || items[b].match("Minigames")) {
+                            aNum = parseInt(items[a].replace(regex, ""))
+                            bNum = parseInt(items[b].replace(regex, ""))
+                            if (aNum < bNum) {
+                                items[a] = "deleted"
+                            }
+                        }
+                    }
+                }
+                if (items[a].match("ハイラル図鑑 武器") || items[a].match("Equipment in Compendium")) {
+                    for (b = 0; b < 5; b++) {
+                        if (items[b].match("ハイラル図鑑 武器") || items[b].match("Equipment in Compendium")) {
+                            aNum = parseInt(items[a].replace(regex, ""))
+                            bNum = parseInt(items[b].replace(regex, ""))
+                            if (aNum < bNum) {
+                                items[a] = "deleted"
+                            }
+                        }
+                    }
+                }
+                if (items[a].match("ハイラル図鑑 魔物") || items[a].match("Monsters in Compendium")) {
+                    for (b = 0; b < 5; b++) {
+                        if (items[b].match("ハイラル図鑑 魔物") || items[b].match("Monsters in Compendium")) {
+                            aNum = parseInt(items[a].replace(regex, ""))
+                            bNum = parseInt(items[b].replace(regex, ""))
+                            if (aNum < bNum) {
+                                items[a] = "deleted"
+                            }
+                        }
+                    }
+                }
+                if (items[a].match("ハイラル図鑑 生き物") || items[a].match("Creatures in Compendium")) {
+                    for (b = 0; b < 5; b++) {
+                        if (items[b].match("ハイラル図鑑 生き物") || items[b].match("Creatures in Compendium")) {
+                            aNum = parseInt(items[a].replace(regex, ""))
+                            bNum = parseInt(items[b].replace(regex, ""))
+                            if (aNum < bNum) {
+                                items[a] = "deleted"
+                            }
+                        }
+                    }
+                }
+                if (items[a].match("ウワサのミツバ") || items[a].match("Rumor Mill")) {
+                    for (b = 0; b < 5; b++) {
+                        if (items[b].match("ウワサのミツバ") || items[b].match("Rumor Mill")) {
+                            aNum = parseInt(items[a].replace(regex, ""))
+                            bNum = parseInt(items[b].replace(regex, ""))
+                            if (aNum < bNum) {
+                                items[a] = "deleted"
+                            }
+                        }
+                    }
+                }
+                if (items[a].match("ライネル全討伐") || items[a].match("Kill All Lynels")) {
+                    for (b = 0; b < 5; b++) {
+                        if (items[b].match("ライネル全討伐") || items[b].match("Kill All Lynels")) {
+                            aNum = parseInt(items[a].replace(regex, ""))
+                            bNum = parseInt(items[b].replace(regex, ""))
+                            if (aNum < bNum) {
+                                items[a] = "deleted"
+                            }
+                        }
+                    }
+                }
+                if (items[a].match("カッシーワ") || items[a].match("Kass")) {
+                    for (b = 0; b < 5; b++) {
+                        if (items[b].match("カッシーワ") || items[b].match("Kass")) {
+                            aNum = parseInt(items[a].replace(regex, ""))
+                            bNum = parseInt(items[b].replace(regex, ""))
+                            if (aNum < bNum) {
+                                items[a] = "deleted"
+                            }
+                        }
+                    }
+                }
+            }
+            for (a in items) {
+                if ((items[a].match("ヒノックス") && items[a].match("討伐")) || (items[a].match("Hinox") && items[a].match("Kill"))) {
                     maxHinox = parseInt(items[a].replace(regex, ""));
                     $('table').append('<td id = "buttonHinox"><img src="img/hinox.png"><br>' + '<p id="counterHinox">0</p>' + '/<p>' + parseInt(items[a].replace(regex, "") + '</p>' + '</td>'));
                     counterHinox = document.getElementById("counterHinox");
@@ -171,12 +266,12 @@
                 }
             }
             function addCountHinox() {
-                if(numHinox + 1 == maxHinox){
+                if (numHinox + 1 == maxHinox) {
                     numHinox++;
                     counterHinox.innerHTML = numHinox;
                     var bg = document.getElementById("buttonHinox");
                     bg.style.backgroundColor = 'rgb(0,85,17)';
-                }else if (numHinox < maxHinox) {
+                } else if (numHinox < maxHinox) {
                     numHinox++;
                     counterHinox.innerHTML = numHinox;
                 }
@@ -209,7 +304,7 @@
                     counterCompCreature.innerHTML = numCompCreature;
                     var bg = document.getElementById("buttonCompCreature");
                     bg.style.backgroundColor = 'rgb(0,85,17)'
-                } else if(numCompCreature < maxCompCreature){
+                } else if (numCompCreature < maxCompCreature) {
                     numCompCreature++;
                     counterCompCreature.innerHTML = numCompCreature;
                 }

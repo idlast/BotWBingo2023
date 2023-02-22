@@ -86,11 +86,11 @@
             let totalCounterCount = 0;
             let aNum = 0;
             let bNum = 0;
+            let counterTarget = 0;
             const regex = /[^0-9]/g;
             $('table tr').html(line);
-            console.log("items:" + items)
+
             for (a in items) {
-                let maxCounter = 0;
                 aNum = 0;
                 bNum = 0;
                 if ((items[a].match("ヒノックス") && items[a].match("討伐")) || (items[a].match("Hinox") && items[a].match("Kill"))) {
@@ -103,6 +103,7 @@
                             }
                         }
                     }
+                    counterTarget = counterTarget + 1;
                 }
                 if ((items[a].match("ミニゲーム") && items[a].match("種")) || items[a].match("Minigames")) {
                     for (b = 0; b < 5; b++) {
@@ -114,6 +115,7 @@
                             }
                         }
                     }
+                    counterTarget = counterTarget + 1;
                 }
                 if (items[a].match("ハイラル図鑑 武器") || items[a].match("Equipment in Compendium")) {
                     for (b = 0; b < 5; b++) {
@@ -125,6 +127,7 @@
                             }
                         }
                     }
+                    counterTarget = counterTarget + 1;
                 }
                 if (items[a].match("ハイラル図鑑 魔物") || items[a].match("Monsters in Compendium")) {
                     for (b = 0; b < 5; b++) {
@@ -136,6 +139,7 @@
                             }
                         }
                     }
+                    counterTarget = counterTarget + 1;
                 }
                 if (items[a].match("ハイラル図鑑 生き物") || items[a].match("Creatures in Compendium")) {
                     for (b = 0; b < 5; b++) {
@@ -147,6 +151,7 @@
                             }
                         }
                     }
+                    counterTarget = counterTarget + 1;
                 }
                 if (items[a].match("ウワサのミツバ") || items[a].match("Rumor Mill")) {
                     for (b = 0; b < 5; b++) {
@@ -158,6 +163,7 @@
                             }
                         }
                     }
+                    counterTarget = counterTarget + 1;
                 }
                 if (items[a].match("ライネル全討伐") || items[a].match("Kill All Lynels")) {
                     for (b = 0; b < 5; b++) {
@@ -169,6 +175,7 @@
                             }
                         }
                     }
+                    counterTarget = counterTarget + 1;
                 }
                 if (items[a].match("カッシーワ") || items[a].match("Kass")) {
                     for (b = 0; b < 5; b++) {
@@ -180,7 +187,11 @@
                             }
                         }
                     }
+                    counterTarget = counterTarget + 1;
                 }
+            }
+            if(counterTarget == 0){
+                window.close();
             }
             for (a in items) {
                 if ((items[a].match("ヒノックス") && items[a].match("討伐")) || (items[a].match("Hinox") && items[a].match("Kill"))) {

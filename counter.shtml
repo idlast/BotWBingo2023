@@ -190,7 +190,7 @@
                     counterTarget = counterTarget + 1;
                 }
             }
-            if(counterTarget == 0){
+            if (counterTarget == 0) {
                 window.close();
             }
             for (a in items) {
@@ -203,6 +203,7 @@
                     if (!buttonHinox) { continue; }
                     numHinox = 0;
                     buttonHinox.addEventListener("click", addCountHinox);
+                    buttonHinox.addEventListener("contextmenu", minusCountHinox);
                     totalCounterCount = totalCounterCount + 1;
                 } else if (items[a].match("ハイラル図鑑 武器") || items[a].match("Equipment in Compendium")) {
                     maxCompWeapon = parseInt(items[a].replace(regex, ""));
@@ -213,6 +214,7 @@
                     if (!buttonCompWeapon) { continue; }
                     numCompWeapon = 0;
                     buttonCompWeapon.addEventListener("click", addCountCompWeapon);
+                    buttonCompWeapon.addEventListener("contextmenu", minusCountCompWeapon);
                     totalCounterCount = totalCounterCount + 1;
                 } else if (items[a].match("ハイラル図鑑 魔物") || items[a].match("Monsters in Compendium")) {
                     maxCompMonster = parseInt(items[a].replace(regex, ""));
@@ -223,6 +225,7 @@
                     if (!buttonCompMonster) { continue; }
                     numCompMonster = 0;
                     buttonCompMonster.addEventListener("click", addCountCompMonster);
+                    buttonCompMonster.addEventListener("contextmenu", minusCountCompMonster);
                     totalCounterCount = totalCounterCount + 1;
                 } else if (items[a].match("ハイラル図鑑 生き物") || items[a].match("Creatures in Compendium")) {
                     maxCompCreature = parseInt(items[a].replace(regex, ""));
@@ -233,6 +236,7 @@
                     if (!buttonCompCreature) { continue; }
                     numCompCreature = 0;
                     buttonCompCreature.addEventListener("click", addCountCompCreature);
+                    buttonCompCreature.addEventListener("contextmenu", minusCountCompCreature);
                     totalCounterCount = totalCounterCount + 1;
                 } else if (items[a].match("ウワサのミツバ") || items[a].match("Rumor Mill")) {
                     maxMitsuba = parseInt(items[a].replace(regex, ""));
@@ -243,6 +247,7 @@
                     if (!buttonMitsuba) { continue; }
                     numMitsuba = 0;
                     buttonMitsuba.addEventListener("click", addCountMitsuba);
+                    buttonMitsuba.addEventListener("contextmenu", minusCountMitsuba);
                     totalCounterCount = totalCounterCount + 1;
                 } else if ((items[a].match("ミニゲーム") && items[a].match("種")) || items[a].match("Minigames")) {
                     maxMinigame = parseInt(items[a].replace(regex, ""));
@@ -253,6 +258,7 @@
                     if (!buttonMinigame) { continue; }
                     numMinigame = 0;
                     buttonMinigame.addEventListener("click", addCountMinigame);
+                    buttonMinigame.addEventListener("contextmenu", minusCountMinigame);
                     totalCounterCount = totalCounterCount + 1;
                 } else if (items[a].match("ライネル全討伐") || items[a].match("Kill All Lynels")) {
                     maxLynel = parseInt(items[a].replace(regex, ""));
@@ -263,6 +269,7 @@
                     if (!buttonLynel) { continue; }
                     numLynel = 0;
                     buttonLynel.addEventListener("click", addCountLynel);
+                    buttonLynel.addEventListener("contextmenu", minusCountLynel);
                     totalCounterCount = totalCounterCount + 1;
                 } else if (items[a].match("カッシーワ") || items[a].match("Kass")) {
                     maxKass = parseInt(items[a].replace(regex, ""));
@@ -273,6 +280,7 @@
                     if (!buttonKass) { continue; }
                     numKass = 0;
                     buttonKass.addEventListener("click", addCountKass);
+                    buttonKass.addEventListener("contextmenu", minusCountKass);
                     totalCounterCount = totalCounterCount + 1;
                 }
             }
@@ -287,6 +295,21 @@
                     counterHinox.innerHTML = numHinox;
                 }
             }
+            function minusCountHinox() {
+                event.preventDefault();
+                if (numHinox - 1 == -1) {
+                    console.log("a");
+                } else if (numHinox == maxHinox) {
+                    console.log("b");
+                    numHinox = numHinox - 1;
+                    var bg = document.getElementById("buttonHinox");
+                    bg.style.backgroundColor = 'rgb(0,17,34)';
+                    counterHinox.innerHTML = numHinox;
+                } else {
+                    numHinox = numHinox - 1;
+                    counterHinox.innerHTML = numHinox;
+                }
+            }
             function addCountCompWeapon() {
                 if (numCompWeapon + 1 == maxCompWeapon) {
                     numCompWeapon++;
@@ -295,6 +318,21 @@
                     bg.style.backgroundColor = 'rgb(0,85,17)'
                 } else if (numCompWeapon < maxCompWeapon) {
                     numCompWeapon++;
+                    counterCompWeapon.innerHTML = numCompWeapon;
+                }
+            }
+            function minusCountCompWeapon() {
+                event.preventDefault();
+                if (numCompWeapon - 1 == -1) {
+                    console.log("a");
+                } else if (numCompWeapon == maxCompWeapon) {
+                    console.log("b");
+                    numCompWeapon = numCompWeapon - 1;
+                    var bg = document.getElementById("buttonCompWeapon");
+                    bg.style.backgroundColor = 'rgb(0,17,34)';
+                    counterCompWeapon.innerHTML = numCompWeapon;
+                } else {
+                    numCompWeapon = numCompWeapon - 1;
                     counterCompWeapon.innerHTML = numCompWeapon;
                 }
             }
@@ -309,6 +347,36 @@
                     counterCompMonster.innerHTML = numCompMonster;
                 }
             }
+            function minusCountCompMonster() {
+                event.preventDefault();
+                if (numCompMonster - 1 == -1) {
+                    console.log("a");
+                } else if (numCompMonster == maxCompMonster) {
+                    console.log("b");
+                    numCompMonster = numCompMonster - 1;
+                    var bg = document.getElementById("buttonCompMonster");
+                    bg.style.backgroundColor = 'rgb(0,17,34)';
+                    counterCompMonster.innerHTML = numCompMonster;
+                } else {
+                    numCompMonster = numCompMonster - 1;
+                    counterCompMonster.innerHTML = numCompMonster;
+                }
+            }
+            function minusCountCompMonster() {
+                event.preventDefault();
+                if (numCompMonster - 1 == -1) {
+                    console.log("a");
+                } else if (numCompMonster == maxCompMonster) {
+                    console.log("b");
+                    numCompMonster = numCompMonster - 1;
+                    var bg = document.getElementById("buttonCompMonster");
+                    bg.style.backgroundColor = 'rgb(0,17,34)';
+                    counterCompMonster.innerHTML = numCompMonster;
+                } else {
+                    numCompMonster = numCompMonster - 1;
+                    counterCompMonster.innerHTML = numCompMonster;
+                }
+            }
             function addCountCompCreature() {
                 if (numCompCreature + 1 == maxCompCreature) {
                     numCompCreature++;
@@ -317,6 +385,21 @@
                     bg.style.backgroundColor = 'rgb(0,85,17)'
                 } else if (numCompCreature < maxCompCreature) {
                     numCompCreature++;
+                    counterCompCreature.innerHTML = numCompCreature;
+                }
+            }
+            function minusCountCompCreature() {
+                event.preventDefault();
+                if (numCompCreature - 1 == -1) {
+                    console.log("a");
+                } else if (numCompCreature == maxCompCreature) {
+                    console.log("b");
+                    numCompCreature = numCompCreature - 1;
+                    var bg = document.getElementById("buttonCompCreature");
+                    bg.style.backgroundColor = 'rgb(0,17,34)';
+                    counterCompCreature.innerHTML = numCompCreature;
+                } else {
+                    numCompCreature = numCompCreature - 1;
                     counterCompCreature.innerHTML = numCompCreature;
                 }
             }
@@ -331,6 +414,21 @@
                     counterMitsuba.innerHTML = numMitsuba;
                 }
             }
+            function minusCountMitsuba() {
+                event.preventDefault();
+                if (numMitsuba - 1 == -1) {
+                    console.log("a");
+                } else if (numMitsuba == maxMitsuba) {
+                    console.log("b");
+                    numMitsuba = numMitsuba - 1;
+                    var bg = document.getElementById("buttonMitsuba");
+                    bg.style.backgroundColor = 'rgb(0,17,34)';
+                    counterMitsuba.innerHTML = numMitsuba;
+                } else {
+                    numMitsuba = numMitsuba - 1;
+                    counterMitsuba.innerHTML = numMitsuba;
+                }
+            }
             function addCountMinigame() {
                 if (numMinigame + 1 == maxMinigame) {
                     numMinigame++;
@@ -339,6 +437,21 @@
                     bg.style.backgroundColor = 'rgb(0,85,17)'
                 } else if (numMinigame < maxMinigame) {
                     numMinigame++;
+                    counterMinigame.innerHTML = numMinigame;
+                }
+            }
+            function minusCountMinigame() {
+                event.preventDefault();
+                if (numMinigame - 1 == -1) {
+                    console.log("a");
+                } else if (numMinigame == maxMinigame) {
+                    console.log("b");
+                    numMinigame = numMinigame - 1;
+                    var bg = document.getElementById("buttonMinigame");
+                    bg.style.backgroundColor = 'rgb(0,17,34)';
+                    counterMinigame.innerHTML = numMinigame;
+                } else {
+                    numMinigame = numMinigame - 1;
                     counterMinigame.innerHTML = numMinigame;
                 }
             }
@@ -353,6 +466,21 @@
                     counterLynel.innerHTML = numLynel;
                 }
             }
+            function minusCountLynel() {
+                event.preventDefault();
+                if (numLynel - 1 == -1) {
+                    console.log("a");
+                } else if (numLynel == maxLynel) {
+                    console.log("b");
+                    numLynel = numLynel - 1;
+                    var bg = document.getElementById("buttonLynel");
+                    bg.style.backgroundColor = 'rgb(0,17,34)';
+                    counterLynel.innerHTML = numLynel;
+                } else {
+                    numLynel = numLynel - 1;
+                    counterLynel.innerHTML = numLynel;
+                }
+            }
             function addCountKass() {
                 if (numKass + 1 == maxKass) {
                     numKass++;
@@ -361,6 +489,21 @@
                     bg.style.backgroundColor = 'rgb(0,85,17)'
                 } else if (numKass < maxKass) {
                     numKass++;
+                    counterKass.innerHTML = numKass;
+                }
+            }
+            function minusCountKass() {
+                event.preventDefault();
+                if (numKass - 1 == -1) {
+                    console.log("a");
+                } else if (numKass == maxKass) {
+                    console.log("b");
+                    numKass = numKass - 1;
+                    var bg = document.getElementById("buttonKass");
+                    bg.style.backgroundColor = 'rgb(0,17,34)';
+                    counterKass.innerHTML = numKass;
+                } else {
+                    numKass = numKass - 1;
                     counterKass.innerHTML = numKass;
                 }
             }

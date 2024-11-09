@@ -289,7 +289,7 @@ var bingo = function (bingoList, size) {
     var bingoBoard = getBingoBoard(bingoList, size, { seed: SEED, mode: MODE, lang: LANG });
 
     // 隠すスロットの数を URL パラメータから取得
-    var numHiddenSlots = 5; // デフォルト値
+    var numHiddenSlots = 23; // デフォルト値
     if (EXPLORATION) {
         var parsedHiddenSlots = parseInt(HIDDEN_SLOTS_PARAM, 10);
         if (!isNaN(parsedHiddenSlots)) {

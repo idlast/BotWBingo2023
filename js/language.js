@@ -48,6 +48,14 @@ function getBingoBoard(bingoList, size, options = { seed: "", mode: "normal", la
 		lineCheckList[25] = [0, 6, 12, 18, 20, 21, 22, 23, 19, 14, 9, 4];
 	}
 
+	function getModeWeightBounds(mode) {
+		var modeKey = mode || "normal";
+		if (typeof BingoConfig !== 'undefined' && BingoConfig.modeWeightBounds[modeKey]) {
+			return BingoConfig.modeWeightBounds[modeKey];
+		}
+		return { min: 2, max: 80 };
+	}
+
 	function difficulty(i) {
 		// To create the magic square we need 2 random orderings of the numbers 0, 1, 2, 3, 4.
 		// The following creates those orderings and calls them Table5 and Table1
@@ -98,24 +106,11 @@ function getBingoBoard(bingoList, size, options = { seed: "", mode: "normal", la
 		var e1 = Table1[(3 * x + y) % 5];
 
 		// Table5 controls the 5* part and Table1 controls the 1* part.
-		value = 5 * e5 + e1;
-		// if(MODE == "short"){
-		// 	ACTUALMODE = "veryshort"
-		// }else if(MODE == normal){
-		// 	ACTUALMODE = "short"
-		// }
-		//Sif (MODE == "normal") { value = Math.floor(value / 3); } // if short mode, limit difficulty
-		if (MODE == "") {
-			value = Math.floor(value / 2);
-		} // if short mode, limit difficulty
-		else if (MODE == "short") {
-			value = Math.floor(value / 4);
-		}
-		else if (MODE == "special") {
-			value = Math.floor((value + 25) / 2);
-		}
-		value++;
-		return value;
+		var baseValue = 5 * e5 + e1; // 0-24
+		var bounds = getModeWeightBounds(MODE);
+		var normalized = baseValue / 24; // 0-1 range
+		var weight = bounds.min + normalized * (bounds.max - bounds.min);
+		return weight;
 	}
 
 	function checkLine(i, typesA) {
@@ -145,33 +140,60 @@ function getBingoBoard(bingoList, size, options = { seed: "", mode: "normal", la
 		//console.log(bingoBoard[i].difficulty);       //store the difficulty
 	}                                          // in order 1-25
 
-	//populate the bingo board in the array
-	for (i = 1; i <= 25; i++) {
-		var getDifficulty = bingoBoard[i].difficulty - 1; // difficulty of current square
-		// check if difficulty was there before, causing duplication issues (maybe)
-		var prevIndex = bingoBoard.slice(1, i).findIndex(b => b.difficulty == (getDifficulty + 1)) + 1;
-		var RNG = Math.floor(bingoList[getDifficulty].length * Math.random());
-		if (RNG == bingoList[getDifficulty].length) { RNG--; } //fix a miracle
-		var j = 0, synergy = 0, currentObj = null, minSynObj = null;
+	var usedNames = new Set();
+	var BASE_TOLERANCE = 5;
+	var MAX_POOL_ATTEMPTS = 5;
 
+	function buildGoalPool(targetWeight) {
+		var attempt = 1;
+		var pool = [];
+		while (pool.length === 0 && attempt <= MAX_POOL_ATTEMPTS) {
+			var tolerance = BASE_TOLERANCE * attempt;
+			pool = bingoList.filter(goal => Math.abs(goal.difficulty - targetWeight) <= tolerance);
+			attempt++;
+		}
+		if (pool.length === 0) {
+			pool = bingoList.slice();
+		}
+		return pool;
+	}
+
+	function pickGoalFromPool(pool, boardIndex, allowUsed) {
+		var RNG = Math.floor(pool.length * Math.random());
+		var j = 0, synergy = 0, currentObj = null, minSynObj = null;
 		do {
-			currentObj = bingoList[getDifficulty][(j + RNG) % bingoList[getDifficulty].length];
-			synergy = checkLine(i, currentObj.types);
-			// give duplicate a really bad synergy
-			if (!(prevIndex < 1 || bingoBoard[prevIndex].name != (currentObj[LANG] || currentObj.name))) {
-				synergy += 10;
+			currentObj = pool[(j + RNG) % pool.length];
+			if (!allowUsed && usedNames.has(currentObj.name)) {
+				j++;
+				continue;
 			}
-			if ((minSynObj == null || synergy < minSynObj.synergy)
-				// check for duplicateitems
-				&& (prevIndex < 1 || bingoBoard[prevIndex].name != (currentObj[LANG] || currentObj.name))) {
+			synergy = checkLine(boardIndex, currentObj.types);
+			if (minSynObj == null || synergy < minSynObj.synergy) {
 				minSynObj = { synergy: synergy, value: currentObj };
 			}
 			j++;
-		} while (minSynObj == null || (synergy != 0) && (j < bingoList[getDifficulty].length));
+		} while ((minSynObj == null || (synergy != 0)) && (j < pool.length));
+		return minSynObj;
+	}
 
-		bingoBoard[i].types = minSynObj.value.types;
-		bingoBoard[i].name = minSynObj.value[LANG] || minSynObj.value.name;
+	//populate the bingo board in the array
+	for (i = 1; i <= 25; i++) {
+		var targetWeight = bingoBoard[i].difficulty;
+		var goalPool = buildGoalPool(targetWeight);
+		var minSynObj = pickGoalFromPool(goalPool, i, false);
+		if (minSynObj == null) {
+			minSynObj = pickGoalFromPool(goalPool, i, true);
+		}
+		if (minSynObj == null) {
+			minSynObj = { synergy: 0, value: goalPool[0] };
+		}
+
+		var chosenGoal = minSynObj.value;
+		usedNames.add(chosenGoal.name);
+		bingoBoard[i].types = chosenGoal.types;
+		bingoBoard[i].name = chosenGoal[LANG] || chosenGoal.name;
 		bingoBoard[i].synergy = minSynObj.synergy;
+		bingoBoard[i].difficulty = chosenGoal.difficulty;
 	}
 
 	return bingoBoard;
@@ -303,6 +325,28 @@ var bingo = function (bingoList, size) {
 		}
 		//$('#slot'+i).append("<br/>" + bingoBoard[i].types.toString());
 		//$('#slot'+i).append("<br/>" + bingoBoard[i].synergy);
+	}
+
+	function renderDebugWeights(show) {
+		for (var slot = 1; slot <= 25; slot++) {
+			var cell = $('#slot' + slot);
+			cell.find('.goal-weight').remove();
+			if (show) {
+				var field = bingoBoard[slot];
+				if (field && typeof field.difficulty !== 'undefined') {
+					var formatted = Math.round(field.difficulty * 10) / 10;
+					cell.append('<div class="goal-weight">' + formatted + '</div>');
+				}
+			}
+		}
+	}
+
+	var debugToggle = $('#debug-toggle');
+	if (debugToggle.length) {
+		renderDebugWeights(debugToggle.is(':checked'));
+		debugToggle.on('change', function () {
+			renderDebugWeights(this.checked);
+		});
 	}
 
 	if (EXPLORATION) {

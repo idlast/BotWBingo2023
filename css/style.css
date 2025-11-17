@@ -377,3 +377,10 @@ th {
 .left   { float:left;  text-align:left;  }
 .right  { float:right; text-align:right; }
 .center { text-align:center; }
+
+.goal-weight {
+	font-size:0.75em;
+	color:#a9b7cf;
+	display:block;
+	margin-top:2px;
+}

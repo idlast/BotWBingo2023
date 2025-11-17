@@ -339,6 +339,36 @@ var bingo = function (bingoList, size) {
 				}
 			}
 		}
+
+		$('.popout').find('.line-sum').remove();
+		if (show) {
+			var lines = ['row1', 'row2', 'row3', 'row4', 'row5', 'col1', 'col2', 'col3', 'col4', 'col5', 'tlbr', 'bltr'];
+			var sums = [];
+			lines.forEach(function(lineId) {
+				var sum = 0;
+				$('#bingo .' + lineId).each(function() {
+					var slotId = $(this).attr('id');
+					if (slotId && slotId.startsWith('slot')) {
+						var index = parseInt(slotId.replace('slot', ''));
+						if (bingoBoard[index] && typeof bingoBoard[index].difficulty !== 'undefined') {
+							sum += bingoBoard[index].difficulty;
+						}
+					}
+				});
+				sums.push({ id: lineId, value: sum });
+			});
+
+			var maxSum = Math.max.apply(null, sums.map(function(s) { return s.value; }));
+			var minSum = Math.min.apply(null, sums.map(function(s) { return s.value; }));
+
+			sums.forEach(function(item) {
+				var formatted = Math.round(item.value * 10) / 10;
+				var cssClass = 'line-sum';
+				if (item.value === maxSum) cssClass += ' line-sum-max';
+				if (item.value === minSum) cssClass += ' line-sum-min';
+				$('#' + item.id).append('<div class="' + cssClass + '">' + formatted + '</div>');
+			});
+		}
 	}
 
 	var debugToggle = $('#debug-toggle');

@@ -384,3 +384,19 @@ th {
 	display:block;
 	margin-top:2px;
 }
+
+.line-sum {
+	font-size:0.85em;
+	color:#f7e279;
+	font-weight:700;
+	display:block;
+	margin-top:2px;
+}
+
+.line-sum-max {
+	color:#fa5050;
+}
+
+.line-sum-min {
+	color:#52d64f;
+}
